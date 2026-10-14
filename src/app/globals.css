@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Theme tokens are space-separated RGB triplets so Tailwind can add alpha.
+  Public: cool milk-glass with periwinkle. Private: the same room, warmer
+  light (blush, rose, butter). Not darker, just closer.
+*/
+:root {
+  --bg: 246 244 251;
+  --surface: 255 255 255;
+  --ink: 36 27 58;
+  --muted: 110 102 133;
+  --accent: 124 108 232;
+  --accent2: 240 142 178;
+  --accent3: 247 218 140;
+}
+
+[data-theme="private"] {
+  --bg: 252 244 244;
+  --ink: 52 28 46;
+  --muted: 130 104 120;
+  --accent: 226 108 150;
+  --accent2: 246 160 130;
+  --accent3: 247 218 140;
+}
+
+html {
+  background-color: rgb(var(--bg));
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}
+
+body {
+  color: rgb(var(--ink));
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgb(var(--accent) / 0.25);
+}
+
+.font-serif {
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+}
+
+@layer components {
+  .glass {
+    @apply border border-white/60 bg-white/60 shadow-glass backdrop-blur-xl;
+  }
+
+  .dropcap::first-letter {
+    font-family: var(--font-serif), Georgia, serif;
+    float: left;
+    font-size: 4.4em;
+    line-height: 0.78;
+    padding: 0.06em 0.12em 0 0;
+    color: rgb(var(--accent));
+  }
+}
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--accent) / 0.7);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
